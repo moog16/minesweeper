@@ -38,13 +38,20 @@ angular.module('thumbtackMineApp')
       return result
     };
 
-    var fillBoard = function(board) {
+    var addValue = function(value) {
+      return {
+        value: value,
+        clicked: false
+      };
+    };
 
+    var fillBoard = function(board) {
       for(var i=0; i<board.length; i++) {
         for(var j=0; j<board[i].length; j++) {
           if(board[i][j] === undefined) {
             board[i][j] = fillNumbers(board, i, j);
           }
+          board[i][j] = addValue(board[i][j]);
         }
       }
       return board;
