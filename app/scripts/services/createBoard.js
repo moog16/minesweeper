@@ -32,7 +32,8 @@ angular.module('thumbtackMineApp')
           if(!board[row][col]) {
             board[row][col] = {
               value: 9,  // 9 is a mine
-              clicked: false
+              clicked: false,
+              permClick: false
             };
             count++;
           }
@@ -48,7 +49,8 @@ angular.module('thumbtackMineApp')
         if(board[row][col] === undefined) {
           board[row][col] = {
             value: fillNumbers(board, row, col),
-            clicked: false
+            clicked: false,
+            permClick: false
           };
         }
       });

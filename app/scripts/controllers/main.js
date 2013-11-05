@@ -10,23 +10,28 @@ angular.module('thumbtackMineApp')
     };
 
     $scope.showValue = function(square) {
-      square.clicked = true;
-      checkMine(square);
+      if(!$scope.cheatMode) {
+        square.clicked = true;
+        square.permClick = true;
+        checkMine(square);
+      }
     };
 
     $scope.toggleAll = function() {
-      var alreadyClicked = {};
       if(!$scope.cheatMode) {
-
+        $scope.cheatMode = true;
         createBoard.forEachSq($scope.board, function(row, col, board) {
-          if(board[row][col].clicked) {
-            var key = JSON.stringify([row,col]);
-            alreadyClicked[key] = true;
-          } else {
+          if(!board[row][col].clicked) {
             board[row][col].clicked = !board[row][col].clicked;
           }
         });
-        console.log(alreadyClicked)
+      } else {
+        $scope.cheatMode = false;
+        createBoard.forEachSq($scope.board, function(row, col, board) {
+          if(!board[row][col].permClick) {
+            board[row][col].clicked = !board[row][col].clicked;
+          }
+        });
       }
     };
 
@@ -37,6 +42,7 @@ angular.module('thumbtackMineApp')
       newBoard = createBoard.fillBoard(newBoard);
       $scope.board = newBoard;
       $scope.cheatMode = false;
+      $scope.alreadyClicked = [];
     };
 
     init();
