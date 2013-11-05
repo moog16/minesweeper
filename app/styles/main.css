@@ -31,4 +31,9 @@ body {
 
 .row {
   margin: auto 0;
+  height: 27px;
+}
+
+.covered {
+  background: #9EB245;
 }

@@ -1,10 +1,13 @@
 <div class="hero-unit">
-  <div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default">Finish</button>
+    <button type="button" class="btn btn-default" ng-click='toggleAll()'>Cheat</button>
+    <button type="button" class="btn btn-default disabled">Mines: 10</button>
+  </div>
     <div ng-repeat='row in board' class='row'>
-      <!-- {{square}} -->
-      <span class='square' ng-repeat='square in row'>
-        <span ng-show='square.clicked'>{{square.value}}</span>
+      <span class='square' ng-repeat='square in row' ng-click='showValue(square)'>
+        <!-- <span ng-show='square.clicked'> -->{{square.value}}<!-- </span> -->
       </span>
     </div>
-  </div>
+  <span ng-show='gamebanner'>Loser!</span>
 </div>

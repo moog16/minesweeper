@@ -2,6 +2,9 @@
 
 angular.module('thumbtackMineApp')
   .controller('MainCtrl', function ($scope) {
+
+    $scope.cheatMode = false;
+
     var createBoard = function(size) {
       var board = new Array(size);
       for(var i=0; i<size; i++) {
@@ -9,6 +12,14 @@ angular.module('thumbtackMineApp')
       }
 
       return board;
+    };
+
+    var forEachSq = function(board, method) {
+      for(var row=0; row<board.length; row++) {
+        for(var col=0; col<board[row].length; col++) {
+          method(row, col);
+        }
+      }
     };
 
     var randomMinePlace = function(amount, board) {
@@ -19,7 +30,10 @@ angular.module('thumbtackMineApp')
         var row = Math.floor(maxLength*Math.random());
 
         if(!board[row][col]) {
-          board[row][col] = 9;  // 9 is a mine
+          board[row][col] = {
+            value: 9,  // 9 is a mine
+            clicked: false
+          };
           count++;
         }
       }
@@ -30,7 +44,7 @@ angular.module('thumbtackMineApp')
       var result = 0;
       for(var i=row-1; i<row+2; i++) {
         for(var j=col-1; j<col+2; j++) {
-          if(board[i] && board[i][j] === 9) {
+          if(board[i] && board[i][j] && board[i][j].value === 9) {
             result++;
           }
         }
@@ -38,23 +52,23 @@ angular.module('thumbtackMineApp')
       return result
     };
 
-    var addValue = function(value) {
-      return {
-        value: value,
-        clicked: false
-      };
+    var fillBoard = function(board) {
+      forEachSq(board, function(row, col) {
+        if(board[row][col] === undefined) {
+          board[row][col] = {
+            value: fillNumbers(board, row, col),
+            clicked: false
+          };
+        }
+      });
+      return board;
     };
 
-    var fillBoard = function(board) {
-      for(var i=0; i<board.length; i++) {
-        for(var j=0; j<board[i].length; j++) {
-          if(board[i][j] === undefined) {
-            board[i][j] = fillNumbers(board, i, j);
-          }
-          board[i][j] = addValue(board[i][j]);
-        }
+    var checkMine = function(square) {
+      if(square.value === 9) {
+        //end game
+        $scope.gamebanner = true;
       }
-      return board;
     };
 
     var mines = 10;
@@ -62,4 +76,26 @@ angular.module('thumbtackMineApp')
     newBoard = randomMinePlace(mines, newBoard);
     newBoard = fillBoard(newBoard);
     $scope.board = newBoard;
+
+    $scope.showValue = function(square) {
+      square.clicked = true;
+      checkMine(square);
+    };
+
+
+
+    // $scope.toggleAll = function() {
+    //   var alreadyClicked = {};
+    //   for(var i=0; i<board.length; i++) {
+    //     for(var j=0; j<board[i].length; j++) {
+    //       if(board[i][j].clicked) {
+    //         var key = JSON.stringify([i,j]);
+    //         alreadyClicked[key] = 
+
+    //       } else {
+    //         board[i][j].clicked = !board[i][j].clicked;
+    //       }
+    //     }
+    //   }
+    // };
   });
