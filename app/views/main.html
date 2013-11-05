@@ -6,7 +6,7 @@
   </div>
     <div ng-repeat='row in board' class='row'>
       <span class='square' ng-repeat='square in row' ng-click='showValue(square)'>
-        <!-- <span ng-show='square.clicked'> -->{{square.value}}<!-- </span> -->
+        <span ng-show='square.clicked' class='tile{{square.value}}'>{{square.value}}</span>
       </span>
     </div>
   <span ng-show='gamebanner'>Loser!</span>
