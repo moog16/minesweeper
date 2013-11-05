@@ -43,6 +43,8 @@ angular.module('thumbtackMineApp')
       $scope.board = newBoard;
       $scope.cheatMode = false;
       $scope.alreadyClicked = [];
+
+      $('.tile9').html('<i class="fa fa-certificate"></i>');
     };
 
     init();
