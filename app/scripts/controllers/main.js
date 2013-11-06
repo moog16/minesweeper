@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('thumbtackMineApp')
-  .controller('MainCtrl', function ($scope, boardHelp) {
+  .controller('MainCtrl', function ($scope, $timeout, boardHelp) {
     var checkMine = function(square) {
       if(square.value === 9) {
         $scope.gamelost = true;
@@ -48,6 +48,12 @@ angular.module('thumbtackMineApp')
 
     $scope.newGame = function() {
       resetBoard($scope.size, $scope.mines);
+      if(!$scope.notification) {
+        $scope.notification = true;
+        $timeout(function() {
+          $scope.notification = !$scope.notification;
+        }, 3000);
+      }
     };
 
     $scope.toggleAll = function() {

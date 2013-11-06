@@ -1,26 +1,34 @@
-<div class="hero-unit">
-  <div class="btn-group">
-    <button type="button" class="btn btn-default" ng-click='finishGame()'>Finish</button>
-    <button type="button" class="btn btn-default" ng-click='toggleAll()'>Cheat</button>
-    <button type="button" class="btn btn-default" ng-click='newGame()'>New Game</button>
-  </div>
+<div class='notification'>
+  <div class='alert alert-warning' ng-hide='gamelost || gamewin || notification'><h1>Minesweeper</h1></div>
+  <div class='alert alert-danger' ng-show='gamelost'><h1>Loser</h1></div>
+  <div class='alert alert-info' ng-show='gamewin'><h1>Winner!</h1></div>
+  <div class='alert alert-success' ng-show='notification'><h1>Game Restarted</h1></div>
+</div>
+<div class='arenaSide'>
   <div class='btn-group'>
-    <button type="button" class="btn btn-default" ng-click='increaseMines()'><i class='fa fa-sort-up'></i></button>
+    <button type='button' class='btn btn-default' ng-click='finishGame()'>Finish</button>
+    <button type='button' class='btn btn-default' ng-click='toggleAll()'>Cheat</button>
+    <button type='button' class='btn btn-default' ng-click='newGame()'>New Game</button>
+  </div>
+  <br>
+  <div class='btn-group'>
+    <button type='button' class='btn btn-default' ng-click='increaseMines()'><i class='fa fa-sort-up'></i></button>
     <button type='button' class='btn btn-default' disabled>Mines: {{mines}}</button>
-    <button type="button" class="btn btn-default" ng-click='decreaseMines()'><i class='fa fa-sort-down'></i></button>
+    <button type='button' class='btn btn-default' ng-click='decreaseMines()'><i class='fa fa-sort-down'></i></button>
   </div>
+  <br>
   <div class='btn-group'>
-    <button type="button" class="btn btn-default" ng-click='increaseBoard()'><i class='fa fa-sort-up'></i></button>
+    <button type='button' class='btn btn-default' ng-click='increaseBoard()'><i class='fa fa-sort-up'></i></button>
     <button type='button' class='btn btn-default' disabled>Board Size: {{size}}</button>
-    <button type="button" class="btn btn-default" ng-click='decreaseBoard()'><i class='fa fa-sort-down'></i></button>
+    <button type='button' class='btn btn-default' ng-click='decreaseBoard()'><i class='fa fa-sort-down'></i></button>
   </div>
+</div>
+
+<div class='arena'>
   <div ng-repeat='row in board' class='row'>
     <span class='square' ng-repeat='square in row' ng-click='showValue(square)'>
       <span ng-show='square.clicked' class='tile{{square.value}}'>{{square.value}}</span>
     </span>
   </div>
-
-
 </div>
-  <h1 ng-show='gamelost'>Loser</h1>
-  <h1 ng-show='gamewin'>Win!</h1>
+

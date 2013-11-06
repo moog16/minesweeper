@@ -2,17 +2,22 @@ body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  font-size: 18px;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 500px;
-  font-size: 18px;
-  font-weight: 200;
+.arena {
+  margin: 130px auto 0 auto;
+  max-width: 410px;
   line-height: 30px;
   background-color: #eee;
   border-radius: 6px;
-  padding: 60px;
+  padding: 40px;
+  float: left;
+}
+
+.arenaSide {
+  margin: 200px auto 0 auto;
+  float: left;
 }
 
 .hero-unit h1 {
@@ -30,13 +35,25 @@ body {
   line-height: 38px;
 }
 
+.square span {
+  position: relative;
+  bottom: 5px;
+}
+
 .row {
   margin: auto 0;
   height: 27px;
 }
 
-.covered {
-  background: #9EB245;
+.notification {
+  position: absolute;
+  width: 105%;
+  margin-left: -100px;
+}
+
+.alert {
+  padding: 0px 35px 2px 19px;
+  height: 56px;
 }
 
 .tile0 {color: gray}
@@ -51,4 +68,8 @@ body {
 
 .tile5 {color: orange}
 
-.tile6 {color:yellow}
+.tile6 {color: yellow}
+
+.tile7 {color: fuchsia}
+
+.tile8 {color: lightSeaGreen}
