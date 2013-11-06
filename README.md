@@ -12,7 +12,8 @@ It should auto open a browser window with Minesweeper ready to play. Otherwise i
 
 All game logic is within 
 
-    app/scripts/controllers AND app/scripts/services
+    app/scripts/controllers
+    app/scripts/services
 
 The page template is within 
 
