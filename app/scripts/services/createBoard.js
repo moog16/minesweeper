@@ -10,7 +10,7 @@ angular.module('thumbtackMineApp')
           }
         }
       }
-      return result
+      return result;
     };
 
 

@@ -4,8 +4,7 @@ angular.module('thumbtackMineApp')
   .controller('MainCtrl', function ($scope, boardHelp) {
     var checkMine = function(square) {
       if(square.value === 9) {
-        //end game
-        $scope.gamebanner = true;
+        $scope.gamelost = true;
       }
     };
 
@@ -19,21 +18,16 @@ angular.module('thumbtackMineApp')
         square.permClick = true;
         checkMine(square);
         if(square.value === 0) {
-          // console.log(square);
           var row = square.row;
           var col = square.col;
-          console.log(row);
-          console.log(col);
 
           for(var i=row-1; i<row+2; i++) {
             for(var j=col-1; j<col+2; j++) {
-              console.log(i, j);
-          //     if($scope.board[i] && $scope.board[i][j]) {
-          //       // $scope.showValue($scope.board[i][j]);
-          //       console.log(i, j)
-          //       // $scope.board[i][j].clicked = true;
-          //       // $scope.board[i][j].permClick = true;
-          //     }
+              if($scope.board[i] && $scope.board[i][j]) {
+                // $scope.showValue($scope.board[i][j]);
+                $scope.board[i][j].clicked = true;
+                $scope.board[i][j].permClick = true;
+              }
             }
           }
         }
@@ -41,7 +35,20 @@ angular.module('thumbtackMineApp')
     };
 
     $scope.finishGame = function(square) {
-      // if()
+      boardHelp.forEachSq($scope.board, function(row, col, board) {
+        if(board[row][col].value < 9 && !board[row][col].permClick) {
+          $scope.gamelost = true;
+        }
+      });
+      console.log($scope.gamelost);
+      if(!$scope.gamelost) {
+        $scope.gamewin = true;
+        console.log($scope.gamewin);
+      }
+    };
+
+    $scope.newGame = function() {
+      resetBoard($scope.size, $scope.mines);
     };
 
     $scope.toggleAll = function() {
@@ -66,11 +73,51 @@ angular.module('thumbtackMineApp')
       }
     };
 
+    $scope.increaseMines = function() {
+      if($scope.mines < $scope.size * $scope.size) {
+        $scope.mines++;
+        $scope.newGame();
+      }
+    };
+
+    $scope.decreaseMines = function() {
+      if($scope.mines > 0) {
+        $scope.mines--;
+        $scope.newGame();
+      }
+    };
+
+    $scope.increaseBoard = function() {
+      if($scope.size < $scope.max) {
+        $scope.size++;
+        $scope.newGame();
+      }
+    };
+
+    $scope.decreaseBoard = function() {
+      if($scope.size > 0) {
+        $scope.size--;
+        $scope.newGame();
+      }
+    };
+
+    $scope.toggleModal = function() {
+      console.log($('#myModal'));
+    };
+
     var init = function() {
-      var mines = 10;
-      var newBoard = boardHelp.createBoard(8);
+      $scope.mines = 10;
+      $scope.size = 8;
+      $scope.max = 15;
+      resetBoard($scope.size, $scope.mines);
+    }
+
+    var resetBoard = function(size, mines) {
+      var newBoard = boardHelp.createBoard(size);
       newBoard = boardHelp.randomMinePlace(mines, newBoard);
       newBoard = boardHelp.fillBoard(newBoard);
+      $scope.gamelost = false;
+      $scope.gamewin = false;
       $scope.set = false;
       $scope.board = newBoard;
       $scope.cheatMode = false;
