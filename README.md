@@ -6,6 +6,7 @@ Minesweeper - the game
 Minesweeper is built using Angularjs. To run the game:
 
     $ npm install
+    $ bower install
     $ grunt server
 
 It should auto open a browser window with Minesweeper ready to play. Otherwise it can be found on localhost:9000.
