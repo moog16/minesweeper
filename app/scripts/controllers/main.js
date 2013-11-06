@@ -40,11 +40,10 @@ angular.module('thumbtackMineApp')
           $scope.gamelost = true;
         }
       });
-      console.log($scope.gamelost);
       if(!$scope.gamelost) {
         $scope.gamewin = true;
-        console.log($scope.gamewin);
       }
+      $('#myModal').modal();
     };
 
     $scope.newGame = function() {
@@ -99,10 +98,6 @@ angular.module('thumbtackMineApp')
         $scope.size--;
         $scope.newGame();
       }
-    };
-
-    $scope.toggleModal = function() {
-      console.log($('#myModal'));
     };
 
     var init = function() {
