@@ -25,7 +25,6 @@ angular.module('thumbtackMineApp')
     };
 
     $scope.showValue = function(square) {
-      $scope.saveGame();
       if(!$scope.set) {
         $('.tile9').html('<i class="fa fa-certificate"></i>');
         $scope.set = true;
@@ -49,6 +48,7 @@ angular.module('thumbtackMineApp')
           }
         }
       }
+      $scope.saveGame();
     };
 
     $scope.finishGame = function(square) {
