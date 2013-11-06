@@ -4,11 +4,28 @@ angular.module('thumbtackMineApp')
   .controller('MainCtrl', function ($scope, $timeout, boardHelp) {
     var checkMine = function(square) {
       if(square.value === 9) {
-        $scope.gamelost = true;
+        notification('gamelost');
+      }
+    };
+
+    var notification = function(state) {
+      $scope.gamelost = false;
+      $scope.gamewin = false;
+      $scope.restart = false;
+      $scope.gameSaveNotification = false;
+      if(!$scope[state]) {
+        $scope[state] = true;
+      }
+      if(state === 'restart' ||
+         state === 'gameSaveNotification') {
+        $timeout(function() {
+          $scope[state] = false;
+        },3000);
       }
     };
 
     $scope.showValue = function(square) {
+      $scope.saveGame();
       if(!$scope.set) {
         $('.tile9').html('<i class="fa fa-certificate"></i>');
         $scope.set = true;
@@ -37,23 +54,18 @@ angular.module('thumbtackMineApp')
     $scope.finishGame = function(square) {
       boardHelp.forEachSq($scope.board, function(row, col, board) {
         if(board[row][col].value < 9 && !board[row][col].permClick) {
-          $scope.gamelost = true;
+          notification('gamelost');
         }
       });
       if(!$scope.gamelost) {
-        $scope.gamewin = true;
+        notification('gamewin');
       }
       $('#myModal').modal();
     };
 
     $scope.newGame = function() {
       resetBoard($scope.size, $scope.mines);
-      if(!$scope.notification) {
-        $scope.notification = true;
-        $timeout(function() {
-          $scope.notification = !$scope.notification;
-        }, 3000);
-      }
+      notification('restart');
     };
 
     $scope.toggleAll = function() {
@@ -106,12 +118,39 @@ angular.module('thumbtackMineApp')
       }
     };
 
+    $scope.saveGame = function() {
+      var savedMineSweeperGame = {
+        board: $scope.board,
+        gamelost: $scope.gamelost,
+        gamewin: $scope.gamewin,
+        cheatMode: $scope.cheatMode,
+        alreadyClicked: $scope.alreadyClicked
+      };
+      savedMineSweeperGame = JSON.stringify(savedMineSweeperGame);
+      localStorage.savedMineSweeperGame = savedMineSweeperGame;
+
+      notification('gameSaveNotification');
+    };
+
+
     var init = function() {
       $scope.mines = 10;
       $scope.size = 8;
       $scope.max = 15;
-      resetBoard($scope.size, $scope.mines);
-    }
+
+      if(!localStorage.savedMineSweeperGame) {
+        resetBoard($scope.size, $scope.mines);
+      } else {
+        var saved = JSON.parse(localStorage.savedMineSweeperGame);
+        $scope.board = saved.board;
+        $scope.set   = false;
+        $scope.gamelost = saved.gamewin;
+        $scope.gamewin = saved.gamelost;
+        $scope.cheatMode = saved.cheatMode;
+        $scope.alreadyClicked = saved.alreadyClicked;
+      }
+    };
+
 
     var resetBoard = function(size, mines) {
       var newBoard = boardHelp.createBoard(size);

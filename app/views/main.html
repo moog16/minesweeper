@@ -2,21 +2,21 @@
   <div class='alert alert-warning' ng-hide='gamelost || gamewin || notification'><h1>Minesweeper</h1></div>
   <div class='alert alert-danger' ng-show='gamelost'><h1>Loser</h1></div>
   <div class='alert alert-info' ng-show='gamewin'><h1>Winner!</h1></div>
-  <div class='alert alert-success' ng-show='notification'><h1>Game Restarted</h1></div>
+  <div class='alert alert-success' ng-show='restart'><h1>Game Restarted</h1></div>
+  <div class='alert alert-success' ng-show='gameSaveNotification'><h1>Game Saved</h1></div>
 </div>
 <div class='arenaSide'>
   <div class='btn-group'>
     <button type='button' class='btn btn-default' ng-click='finishGame()'>Finish</button>
     <button type='button' class='btn btn-default' ng-click='toggleAll()'>Cheat</button>
     <button type='button' class='btn btn-default' ng-click='newGame()'>New Game</button>
+    <button type='button' class='btn btn-default' ng-click='saveGame()'>Save Game</button>
   </div>
-  <br>
   <div class='btn-group'>
     <button type='button' class='btn btn-default' ng-click='increaseMines()'><i class='fa fa-sort-up'></i></button>
     <button type='button' class='btn btn-default' disabled>Mines: {{mines}}</button>
     <button type='button' class='btn btn-default' ng-click='decreaseMines()'><i class='fa fa-sort-down'></i></button>
   </div>
-  <br>
   <div class='btn-group'>
     <button type='button' class='btn btn-default' ng-click='increaseBoard()'><i class='fa fa-sort-up'></i></button>
     <button type='button' class='btn btn-default' disabled>Board Size: {{size}}</button>
