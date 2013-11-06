@@ -1,12 +1,12 @@
 body {
-  background: #fafafa;
+  background: #6d91a2;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
   font-size: 18px;
 }
 
 .arena {
-  margin: 40px auto 0 auto;
+  margin: 40px 0 0 60px;
   max-width: 410px;
   line-height: 30px;
   background-color: #eee;
@@ -46,8 +46,8 @@ body {
 
 .notification {
   position: absolute;
-  width: 105%;
-  margin-left: -115px;
+  top: 0px;
+  width: 100%;
 }
 
 .alert {

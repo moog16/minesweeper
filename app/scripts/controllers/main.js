@@ -48,7 +48,7 @@ angular.module('thumbtackMineApp')
           }
         }
       }
-      $scope.saveGame();
+      saveGameHelper();
     };
 
     $scope.finishGame = function(square) {
@@ -118,7 +118,7 @@ angular.module('thumbtackMineApp')
       }
     };
 
-    $scope.saveGame = function() {
+    var saveGameHelper = function() {
       var savedMineSweeperGame = {
         board: $scope.board,
         gamelost: $scope.gamelost,
@@ -128,7 +128,10 @@ angular.module('thumbtackMineApp')
       };
       savedMineSweeperGame = JSON.stringify(savedMineSweeperGame);
       localStorage.savedMineSweeperGame = savedMineSweeperGame;
+    };
 
+    $scope.saveGame = function() {
+      saveGameHelper();
       notification('gameSaveNotification');
     };
 
@@ -144,13 +147,12 @@ angular.module('thumbtackMineApp')
         var saved = JSON.parse(localStorage.savedMineSweeperGame);
         $scope.board = saved.board;
         $scope.set   = false;
-        $scope.gamelost = saved.gamewin;
-        $scope.gamewin = saved.gamelost;
+        $scope.gamelost = saved.gamelost;
+        $scope.gamewin = saved.gamewin;
         $scope.cheatMode = saved.cheatMode;
         $scope.alreadyClicked = saved.alreadyClicked;
       }
     };
-
 
     var resetBoard = function(size, mines) {
       var newBoard = boardHelp.createBoard(size);
